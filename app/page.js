@@ -1,24 +1,30 @@
-"use client";
 // app/page.js
 
-// --- MODIFIED SERVER-SIDE DATA FETCHING (Using Internal API) ---
+// IMPORTANT: No "use client"; directive is present here, 
+// ensuring this file runs as a Server Component for SEO and speed.
+
+// --- SERVER-SIDE DATA FETCHING (Using Secure Internal API) ---
 async function fetchAggregatedTrends() {
-    // Environment variable 'NEXT_PUBLIC_BASE_URL' abhi hum Vercel mein set karenge.
+    // Environment variable 'NEXT_PUBLIC_BASE_URL' will be Vercel's domain or localhost
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'; 
     
-    // Apne hi naye API route ko call karein
+    // Calling our secure internal API route: /api/trends
     const response = await fetch(`${baseUrl}/api/trends`, {
-        // Data ko har 1 ghante (3600 seconds) mein server par refresh karein
+        // Data refreshes every 1 hour (3600 seconds)
         next: { revalidate: 3600 } 
     });
 
     if (!response.ok) {
         console.error("Failed to fetch data from internal API. Status:", response.status);
+        // Log the response text for better debugging
+        const errorText = await response.text();
+        console.error("API Response Error Text:", errorText);
         return null;
     }
     
     const data = await response.json(); // Data JSON format mein aayega
     
+    // Transforming the array data into a usable object map
     const trendMap = data.reduce((acc, item) => {
         acc[item.metric_name] = item.value;
         return acc;
@@ -26,19 +32,6 @@ async function fetchAggregatedTrends() {
 
     return trendMap;
 }
-
-// ... (Rest of the code)
-
-// app/page.js
-
-// --- MODIFIED SERVER-SIDE DATA FETCHING (Using Internal API) ---
-async function fetchAggregatedTrends() {
-    // ... (This function uses 'fetch' and is correct) ...
-    const response = await fetch(`${baseUrl}/api/trends`, { /* ... */ });
-    // ...
-}
-
-// ... (Rest of the code, including the MarketPulseDashboard component)
 
 
 // --- THE AWESOME FRONTEND COMPONENT ---
@@ -115,6 +108,7 @@ export default async function MarketPulseDashboard() {
             <div style={{ textAlign: 'center', padding: '20px', background: '#fff3cd', borderRadius: '15px' }}>
                 <h3 style={{ margin: 0, color: '#856404' }}>Don't Just Watch. ACT!</h3>
                 <p style={{ fontSize: '1.1em' }}>Get instant **SMS/Email alerts** the moment a trend shifts. **Be the first to know.**</p>
+                {/* Yahan PremiumButton.jsx ko import karna hoga, ya yeh code component mein hona chahiye */}
                 <button 
                     onClick={() => alert("Redirect to payment page for Premium Alerts!")}
                     style={{ background: '#ffc107', color: 'black', border: 'none', padding: '12px 25px', fontSize: '1.2em', fontWeight: 'bold', borderRadius: '8px', cursor: 'pointer' }}>
