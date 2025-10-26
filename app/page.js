@@ -50,8 +50,11 @@ export default async function MarketPulseDashboard() {
     const sentimentColor = sentiment >= 0 ? 'green' : 'red';
     const sentimentText = sentiment >= 0 ? 'BULLISH' : 'BEARISH';
 
-    return (
-        <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: 'auto', padding: '20px' }}>
+    r// app/page.js mein, yeha kahi bhi ek naya comment add karein
+return (
+    <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: 'auto', padding: '20px' }}>
+        {/* FORCE VERCEL TO REFRESH CACHE */} 
+// ...cd
             
             {/* 1. AWESOME TITLE & BRANDING (Catching Population) */}
             <h1 style={{ color: '#0070f3', textAlign: 'center' }}>
