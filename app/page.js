@@ -3,26 +3,27 @@
 // IMPORTANT: No "use client"; directive is present here, 
 // ensuring this file runs as a Server Component for SEO and speed.
 
+// app/page.js
+
 // --- SERVER-SIDE DATA FETCHING (Using Secure Internal API) ---
 async function fetchAggregatedTrends() {
-    // Environment variable 'NEXT_PUBLIC_BASE_URL' will be Vercel's domain or localhost
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'; 
+    // NOTE: Server Components MUST use relative path for internal API routes
+    // during build/runtime to avoid ECONNREFUSED errors.
     
-    // Calling our secure internal API route: /api/trends
-    const response = await fetch(`${baseUrl}/api/trends`, {
-        // Data refreshes every 1 hour (3600 seconds)
+    // Apne hi naye API route ko call karein (No baseUrl needed)
+    const response = await fetch(`/api/trends`, { // <--- PATH CHANGE YAHAN HUA HAI
+        // Data ko har 1 ghante (3600 seconds) mein server par refresh karein
         next: { revalidate: 3600 } 
     });
 
     if (!response.ok) {
         console.error("Failed to fetch data from internal API. Status:", response.status);
-        // Log the response text for better debugging
         const errorText = await response.text();
         console.error("API Response Error Text:", errorText);
         return null;
     }
     
-    const data = await response.json(); // Data JSON format mein aayega
+    const data = await response.json();
     
     // Transforming the array data into a usable object map
     const trendMap = data.reduce((acc, item) => {
@@ -32,6 +33,9 @@ async function fetchAggregatedTrends() {
 
     return trendMap;
 }
+
+// ... (Rest of the code remains the same) 
+
 
 
 // --- THE AWESOME FRONTEND COMPONENT ---
