@@ -1,4 +1,8 @@
 // app/api/trends/route.js
+// FORCE CACHE BUST v2
+
+import { createClient } from '@supabase/supabase-js';
+// ... (baaki code)
 
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
