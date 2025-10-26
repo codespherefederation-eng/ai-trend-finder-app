@@ -1,5 +1,5 @@
 // app/api/trends/route.js
-// FORCE CACHE BUST v2
+// VERCEL FORCE PUSH FIX
 
 import { createClient } from '@supabase/supabase-js';
 // ... (baaki code)
