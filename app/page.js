@@ -29,26 +29,16 @@ async function fetchAggregatedTrends() {
 
 // ... (Rest of the code)
 
-// --- SERVER-SIDE DATA FETCHING (SEO aur Speed ke liye Zaroori) ---
+// app/page.js
+
+// --- MODIFIED SERVER-SIDE DATA FETCHING (Using Internal API) ---
 async function fetchAggregatedTrends() {
-    // Is function mein hum 'trend_aggregates' se data fetch karenge
-    let { data, error } = await supabase
-        .from('trend_aggregates')
-        .select('metric_name, value');
-
-    if (error) {
-        console.error("Error fetching trends:", error);
-        return null;
-    }
-    
-    // Data ko easily access karne ke liye ek map banaana
-    const trendMap = data.reduce((acc, item) => {
-        acc[item.metric_name] = item.value;
-        return acc;
-    }, {});
-
-    return trendMap;
+    // ... (This function uses 'fetch' and is correct) ...
+    const response = await fetch(`${baseUrl}/api/trends`, { /* ... */ });
+    // ...
 }
+
+// ... (Rest of the code, including the MarketPulseDashboard component)
 
 
 // --- THE AWESOME FRONTEND COMPONENT ---
