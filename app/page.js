@@ -138,3 +138,4 @@ export default async function MarketPulseDashboard() {
             </div>
         </div>
     );
+} // <--- Yahan par final closing bracket add .
