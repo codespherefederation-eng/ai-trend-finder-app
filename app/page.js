@@ -6,10 +6,16 @@ import React from 'react'; // React import karna zaroori hai
 
 // --- SERVER-SIDE DATA FETCHING (Using Secure Internal API) ---
 async function fetchAggregatedTrends() {
+    // FINAL FIX: We are using the known absolute URL directly to prevent 
+    // the "Failed to parse URL" build-time warning, which occurs because 
+    // environment variables often aren't loaded correctly during static export.
+    const apiUrl = 'https://ai-pipeline-worker.onrender.com/api/trends';
+
     try {
         // Fetch call to your internal API route
-        const response = await fetch(`/api/trends`, { 
-            cache: 'no-store' // This prevents caching issues during the build process
+        const response = await fetch(apiUrl, { 
+            // Setting cache to 'no-store' is correct for dynamic server data
+            cache: 'no-store' 
         });
 
         if (!response.ok) {
@@ -121,7 +127,6 @@ export default async function MarketPulseDashboard() {
                 <h3 style={{ margin: 0, color: '#856404', fontSize: '1.4em' }}>Don't Just Watch. ACT!</h3>
                 <p style={{ fontSize: '1.1em', margin: '10px 0 20px 0' }}>Get instant **SMS/Email alerts** the moment a trend shifts. **Be the first to know.**</p>
                 <button 
-                    onClick={() => alert("Redirect to payment page for Premium Alerts!")}
                     style={{ 
                         background: '#ffc107', 
                         color: '#333', 
@@ -138,4 +143,4 @@ export default async function MarketPulseDashboard() {
             </div>
         </div>
     );
-} // <--- Yahan par final closing bracket add .
+} 
