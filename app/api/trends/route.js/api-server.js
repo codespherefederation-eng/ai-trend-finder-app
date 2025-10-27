@@ -136,7 +136,7 @@ export default async function MarketPulseDashboard() {
                         cursor: 'pointer',
                         boxShadow: '0 4px #e0a800'
                     }}>
-                    Unlock Premium Alerts Now 💰
+                    Unlock Premium Alerts Now 
                 </button>
             </div>
         </div>
