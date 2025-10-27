@@ -1,6 +1,3 @@
-/ app/api/trends/route.js
-// Final clean version for Next.js App Router (Render Compatible)
-
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
